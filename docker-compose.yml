@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./dashboard
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./dashboard:/app
+      - /app/node_modules
+    environment:
+      - HOST=0.0.0.0
+    command: npm run dev
+
+  backend:
+    build: ./dpdbackend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./dpdbackend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
