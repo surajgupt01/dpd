@@ -34,15 +34,15 @@ export default function TeamList({
   return (
     <div className="w-full flex flex-col items-center p-4 h-150">
       <div
-        className="m-4 flex w-full cursor-pointer items-center p-2 text-gray-500 text-sm hover:text-gray-800"
+        className="m-4 flex w-full cursor-pointer items-center p-2 text-gray-400 text-sm hover:text-gray-800"
         onClick={() => {
           setTeamMembers(null);
         }}
       >
         <Back /> back
       </div>
-      <ul className="w-full relative">
-       {!loading && <li className="border-1 border-gray-100 shadow-sm w-full p-2 grid grid-cols-4">
+      <ul className="w-full relative text-gray-600">
+       {!loading && <li className="border-1 border-gray-800 shadow-sm w-full p-2 grid grid-cols-4">
           <span className="m-2 font-semibold">name</span>
           <span className="m-2 font-semibold">department</span>
           <span className="m-2 font-semibold">email</span>
@@ -51,7 +51,7 @@ export default function TeamList({
         {!loading && Employees.map((e: any, index) => (
           <div
             key={index}
-            className="grid grid-cols-4 border-b-1 border-gray-200 m-2 text-sm text-black p-2 hover:bg-gray-200 border-t-1 cursor-pointer "
+            className="grid grid-cols-4 border-b-1 border-gray-700 m-2 text-sm text-gray-400 p-2 hover:bg-gray-800 border-t-1 cursor-pointer "
           >
             <span>{e.name}</span>
             <span>{e.department}</span>

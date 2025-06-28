@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ setMail }: any) {
+export default function ELogin({ setMail }: any) {
   const navigate = useNavigate();
   const [form_data, setFormData] = useState({
     username: "",

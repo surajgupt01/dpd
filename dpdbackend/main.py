@@ -25,10 +25,10 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,            # ✅ frontend URLs allowed
+    allow_origins=origins,           
     allow_credentials=True,
-    allow_methods=["*"],              # ✅ allow all HTTP methods
-    allow_headers=["*"]               # ✅ allow all headers
+    allow_methods=["*"],            
+    allow_headers=["*"]              
 )
 
 @app.get('/')
@@ -92,7 +92,7 @@ def post_feedback(data : FeedbackCreate, access_token: str = Depends(oauth2_sche
     
     # print('user' , user)
     temp =  db.query(Employee).filter(Employee.email==data.email).first()
-    # print(temp)
+    print('temp',temp)
     feedback_data = data.model_dump()
 
     ratings = [
@@ -155,9 +155,9 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     
     if not user or not verify_password(form_data.password, user.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    
+  
     token = create_access_token(data={"sub": user.email, "role": user_type})
-    return {"access_token": token, "token_type": "bearer"}
+    return {"access_token": token, "token_type": "bearer" ,'email' : form_data.username}
    
 
 

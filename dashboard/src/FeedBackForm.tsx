@@ -1,10 +1,12 @@
 import { Rating } from "./Rating";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import Loader from "./loader";
 
 export default function FeedbackForm() {
   const teamOption = useRef(null);
   const [team, setTeam] = useState([]);
+  const [loading , setLoading] = useState(false)
   const [formData, setFormData] = useState({
     feedbacktype: "",
     email: "",
@@ -42,17 +44,18 @@ export default function FeedbackForm() {
  const token = localStorage.getItem('access_token')
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault(); // ✅ first prevent form default
+    e.preventDefault(); 
     console.log(formData);
 
     try {
+      setLoading(true)
       const response = await axios.post(
         "http://localhost:8000/feedback",
         formData,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // ✅ Correct way to send token
+            Authorization: `Bearer ${token}`, 
           },
         }
       );
@@ -60,6 +63,7 @@ export default function FeedbackForm() {
     } catch (error) {
       console.error("Submission failed:", error);
     }
+    setLoading(false)
   }
 
 
@@ -91,12 +95,13 @@ export default function FeedbackForm() {
   }, [formData.department]);
 
   return (
-    <div className=" border-gray-300 rounded-xl w-full  p-2 flex justify-center ">
+    <div className={`relative border-gray-300 rounded-xl w-full  p-2 flex justify-center  `}>
+      {loading && <div className={`w-full h-full flex justify-center items-center absolute  ` }><Loader></Loader></div>}
       <form
-        className="flex justify-center flex-col items-center scale-95"
+        className={`flex justify-center flex-col items-center scale-95 text-gray-400`}
         onSubmit={handleSubmit}
       >
-        <p className="text-gray-900 text-lg font-semibold">Feedback Form</p>
+        <p className="text-gray-300 text-lg font-semibold">Feedback Form</p>
 
         <div className="w-full p-4">
           <p className="text-md font-semibold mb-2">Feedback Type</p>
@@ -174,30 +179,31 @@ export default function FeedbackForm() {
         <select
           ref={teamOption}
           name="department"
-          className="mt-2 border-1 border-gray-300 rounded-lg h-12 w-144 p-2 m-2"
+          className="mt-2 border-1 border-gray-600 rounded-lg h-12 w-144 p-2 m-2"
           onChange={handleChange}
         >
-          <option value="">Select a department</option>
-          {team && team.map((e) => <option key={e} value={e}>{e}</option>)}
+          <option value="" className="bg-gray-800">Select a department</option>
+          {team && team.map((e) => <option key={e} value={e} className="bg-gray-900 border-gray-900 ">{e}</option>)}
         </select>
 
         <select
           name="email"
-          className="border-1 border-gray-300 rounded-lg h-12 w-144 p-2 m-2"
+          className="border-1 border-gray-600 rounded-lg h-12 w-144 p-2 m-2"
           onChange={handleChange}
         >
           {teamMembers &&
             teamMembers.map((e: any, index) => (
-              <option key={index} value={e.email}>{e.email}</option>
+              <option key={index} value={e.email} className="bg-gray-900">{e.email}</option>
             ))}
         </select>
 
-        <input
+        <textarea
           name="feedback"
           placeholder=""
-          className="border-1 border-gray-300 rounded-lg h-50 w-144 p-2 m-2"
+          
+          className="border-1 border-gray-600 rounded-lg h-50 w-144 p-2 m-2 text-left resize-none"
           onChange={handleChange}
-        ></input>
+        ></textarea>
 
         <button
           type="submit"

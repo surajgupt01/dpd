@@ -30,7 +30,8 @@ export default function LogsPage({ setGdata }: LogsPageProps) {
           "Content-Type": "application/json",
         },
       });
-      setLogs(response.data);
+      let res = response.data.reverse()
+      setLogs(res);
     } catch (err) {
       console.error("Error fetching logs:", err);
     }
@@ -53,18 +54,19 @@ export default function LogsPage({ setGdata }: LogsPageProps) {
   }, [logs]);
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 flex flex-col items-center">
+      <p className="text-gray-600 font-semibold text-2xl mb-6">Logs</p>
       {!logs.length ? (
         <Loader />
       ) : (
         logs.map((e: any, i: number) => (
           <div
             key={i}
-            className="w-full p-2 border-t border-b border-gray-300 text-xs text-gray-800"
+            className="w-200 p-2 border-t border-b border-gray-900 text-xs text-gray-300"
           >
-            <div>Sender: {e.manager_mail}</div>
-            <div>Receiver: {e.employee_mail}</div>
-            <div className="text-[10px] flex justify-end">{dateTme(e.timestamp)}</div>
+            <div className="text-green-400">Sender: {e.manager_mail}</div>
+            <div className="text-blue-400">Receiver: {e.employee_mail}</div>
+            <div className="text-[10px] flex justify-end text-yellow-50">{dateTme(e.timestamp)}</div>
             <div className="text-xs mt-2">Average rating: {e.rating}</div>
 
             <div className="flex flex-col text-xs">
@@ -77,8 +79,9 @@ export default function LogsPage({ setGdata }: LogsPageProps) {
                 <div className="ml-4">teamwork: {e.teamwork}/5</div>
               </div>
             </div>
+            <div className="mt-4 border p-2 rounded-lg border-gray-800">
+              <p className="text-gray-500 text-xs">Feedback</p>
 
-            <div className="mt-4 border p-2 rounded-lg border-gray-200">
               {e.feedback}
             </div>
           </div>

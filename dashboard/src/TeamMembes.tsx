@@ -51,7 +51,7 @@ export default function TeamMembers({menuSelected , setTeamMembers}:MainDivProps
             {team.length > 0 ?
                 team.map((e,index)=>(
                   
-                  <div key={e} className={`border-1 w-40 h-40 rounded-lg flex justify-center items-center shadow-sm border-gray-100 ${colors[index]} text-white font-semibold hover:scale-105 duration-300 ease-in-out ` } onClick={(x)=>handleTeam(x)}>{e}</div>
+                  <div key={e} className={`border-1 w-40 h-40 rounded-lg flex justify-center items-center shadow-sm border-gray-800 ${colors[index]} text-white font-semibold hover:scale-105 duration-300 ease-in-out ` } onClick={(x)=>handleTeam(x)}>{e}</div>
 
                 ))
             :<div className="absolute top-50 left-70">
